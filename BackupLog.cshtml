@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Backup Log";
+    Page.Heading = "Table of Active Backups";
+
+    var db = Database.Open("BackupTrackr");
+    var selectQuery = @"SELECT backups.date, backups.label,
+                               backups.description, types.description as type,
+                               backups.notes
+                          FROM backups
+                          JOIN types
+                            ON backups.type = types.abbrev";
+    var selectedData = db.Query(selectQuery);
+    var grid = new WebGrid(source: selectedData);
+}
+
+<div>
+    @grid.GetHtml(
+        columns: grid.Columns(
+            grid.Column("Date",format: @<text>@item.date.ToShortDateString()</text>),
+            grid.Column("Label"),
+            grid.Column("Description"),
+            grid.Column("Notes")
+        )
+    )
+</div>

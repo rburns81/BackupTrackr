@@ -1,0 +1,41 @@
+﻿@{
+    var todayDay = DateTime.Now.Day.ToString();
+    var todayMonth = DateTime.Now.Month.ToString();
+    var todayYear = DateTime.Now.Year.ToString();
+
+    
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="author" content="Richard Burns" />
+        <title>@Page.Title</title>
+        <link href="~/Styles/Style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1>Backup Trackr</h1>
+                <p>Cool graphics coming soon.</p>
+            </div>
+            <div id="navigation">
+                <p><strong>Navigation</strong>(CSS to make it pretty will come later)</p>
+                <ul>
+                    <li><a href="~/BackupLog">Backup Log</a></li>
+                    <li><p>Hard Drive Inventory (coming soon!)</p></li>
+                    <li><p>New Backup (coming soon!)</p></li>
+                    <li><p>Modify Backup (coming soon!)</p></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>@Page.Heading</h1>
+                @RenderBody()
+            </div>
+            <div id="footer">Project started: @DateTime.Now.ToString("MM/yyyy")</div>
+        </div>
+
+    </body>
+</html>
