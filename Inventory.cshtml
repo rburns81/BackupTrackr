@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Hard Drive Inventory";
+    Page.Heading = "List of Backup Hard Drives";
+
+    var db = Database.Open("BackupTrackr");
+    var selectData = @"SELECT harddrives.label, harddrives.serial,
+                              statuses.description, harddrives.size
+                         FROM harddrives
+                         JOIN statuses
+                           ON harddrives.status = statuses.abbrev";
+    var selectedData = db.Query(selectData);
+    WebGrid grid = new WebGrid(source: selectedData);
+}
+
+<div>
+    @grid.GetHtml()
+</div>
