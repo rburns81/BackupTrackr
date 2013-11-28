@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "Home of the Backup Trackr!";
+    Page.Title = "Hard Drives";
     Page.Heading="Backup Trackr Home";
 
     var db = Database.Open("BackupTrackr");
@@ -10,11 +10,19 @@
                          JOIN statuses
                            ON harddrives.status = statuses.abbrev";
     var selectedData = db.Query(selectData);
-    WebGrid grid = new WebGrid(source: selectedData);
     
+    WebGrid grid = new WebGrid(source: selectedData);
 }
 
-<p>This page is for tracking hard drives and their utilization in a backup plan</p>
-<p>Select an option from the navigation section</p>
+<a class="btn btn-default pull-right" role="button" href="/AddHardDrive">Add</a>
 
-@grid.GetHtml())
+@grid.GetHtml(
+    tableStyle : "table table-striped",
+    columns: grid.Columns(
+        grid.Column("label", "Lable"),
+        grid.Column("serial", "Serial"),
+        grid.Column("description", "Description"),
+        grid.Column("size", "Size"),
+        grid.Column(header:"", format:@<text><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive/@item.label">Edit</a></text>)
+    )
+)
