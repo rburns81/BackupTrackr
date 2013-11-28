@@ -3,8 +3,18 @@
     Page.Title = "Home of the Backup Trackr!";
     Page.Heading="Backup Trackr Home";
 
+    var db = Database.Open("BackupTrackr");
+    var selectData = @"SELECT harddrives.label, harddrives.serial,
+                              statuses.description, harddrives.size
+                         FROM harddrives
+                         JOIN statuses
+                           ON harddrives.status = statuses.abbrev";
+    var selectedData = db.Query(selectData);
+    WebGrid grid = new WebGrid(source: selectedData);
     
 }
 
 <p>This page is for tracking hard drives and their utilization in a backup plan</p>
 <p>Select an option from the navigation section</p>
+
+@grid.GetHtml())

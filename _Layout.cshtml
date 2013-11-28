@@ -2,41 +2,53 @@
     var todayDay = DateTime.Now.Day.ToString();
     var todayMonth = DateTime.Now.Month.ToString();
     var todayYear = DateTime.Now.Year.ToString();
-
-    
 }
 
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="author" content="Richard Burns" />
-        <title>@Page.Title</title>
-        <link href="~/Styles/Style.css" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <div id="container">
-            <div id="header">
-                <h1>Backup Trackr</h1>
-                <p>Cool graphics coming soon.</p>
-            </div>
-            <div id="navigation">
-                <p><strong>Navigation</strong>(CSS to make it pretty will come later)</p>
-                <ul>
-                    <li><a href="~/BackupLog">Backup Log</a></li>
-                    <li><a href="~/Inventory">Hard Drive Inventory</a></li>
-                    <li><a href="~/NewBackup">New Backup</a></li>
-                    <li><a href="~/AddHardDrive">Add Hard Drive</a></li>
-                    <li>Modify Backup (coming soon!)</li>
-                </ul>
-            </div>
-            <div id="content">
-                <h1>@Page.Heading</h1>
-                @RenderBody()
-            </div>
-            <div id="footer">Project started: 11/2013</div>
-        </div>
+  <head>
 
-    </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="author" content="Richard Burns" />
+    <title>@Page.Title</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- App styles -->
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+          <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+           <![endif]-->
+  </head>
+  <body>
+
+    <div class="container">
+
+      <!-- Static navbar -->
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Backup Trackr</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/Inventory">Hard Drives</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      @RenderBody()
+
+    </div> <!-- /container -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
 </html>
