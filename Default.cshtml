@@ -23,6 +23,6 @@
         grid.Column("serial", "Serial"),
         grid.Column("description", "Description"),
         grid.Column("size", "Size"),
-        grid.Column(header:"", format:@<text><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive/@item.label">Edit</a></text>)
+        grid.Column(header:"", format:@<text><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive?label=@item.label">Edit</a></text>)
     )
 )
