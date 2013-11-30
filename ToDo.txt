@@ -1,0 +1,7 @@
+To Do:
+- Finish for BackupLog
+    |- Make the backup log the default page
+- Write HTML form for adding hard drives
+- Write HTML form for adding backups 
+
+Done:

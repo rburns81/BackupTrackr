@@ -19,10 +19,10 @@
 @grid.GetHtml(
     tableStyle : "table table-striped",
     columns: grid.Columns(
-        grid.Column("label", "Lable"),
+        grid.Column("label", "Label"),
         grid.Column("serial", "Serial"),
         grid.Column("description", "Description"),
-        grid.Column("size", "Size"),
+        grid.Column("size", "Size in GB"),
         grid.Column(header:"", format:@<text><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive?label=@item.label">Edit</a></text>)
     )
 )
