@@ -3,12 +3,15 @@
     Page.Title = "Backup Log";
 
     var db = Database.Open("BackupTrackr");
-    var selectQuery = @"SELECT backups.date, backups.label,
-                               backups.description, types.description as type,
-                               backups.notes
-                          FROM backups
-                          JOIN types
-                            ON backups.type = types.abbrev";
+    var selectQuery = @"SELECT Backups.date as Date, HardDrives.label as Label,
+                               Backups.description as Description, 
+                               BackupTypes.description as Type,
+                               Backups.notes as Notes, Backups.yearly as Yearly
+                          FROM Backups
+                          LEFT JOIN HardDrives
+                            ON Backups.harddrive = HardDrives.id
+                          LEFT JOIN BackupTypes
+                            ON Backups.type = BackupTypes.id";
     var selectedData = db.Query(selectQuery);
 }
 
@@ -19,6 +22,7 @@
             <th>Label</th>
             <th>Description</th>
             <th>Notes</th>
+            <th>Yearly</th>
         </tr>
         @foreach(var row in selectedData)
         {
@@ -27,6 +31,7 @@
             <td>@row.label</td>
             <td>@row.description</td>
             <td>@row.notes</td>
+            <td>@row.yearly</td>
         </tr>
         }
     </table>

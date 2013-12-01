@@ -4,11 +4,11 @@
     Page.Heading = "List of Backup Hard Drives";
 
     var db = Database.Open("BackupTrackr");
-    var selectData = @"SELECT harddrives.label, harddrives.serial,
-                              statuses.description, harddrives.size
-                         FROM harddrives
-                         JOIN statuses
-                           ON harddrives.status = statuses.abbrev";
+    var selectData = @"SELECT HardDrives.label, HardDrives.serial,
+                              HardDriveStatuses.description, HardDrives.size
+                         FROM HardDrives
+                         JOIN HardDriveStatuses
+                           ON HardDrives.status = HardDriveStatuses.id";
     var selectedData = db.Query(selectData);
     WebGrid grid = new WebGrid(source: selectedData);
 }
