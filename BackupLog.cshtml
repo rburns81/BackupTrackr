@@ -16,23 +16,32 @@
 }
 
 <div>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Label</th>
-            <th>Description</th>
-            <th>Notes</th>
-            <th>Yearly</th>
-        </tr>
-        @foreach(var row in selectedData)
-        {
-        <tr>
-            <td>@row.date</td>
-            <td>@row.label</td>
-            <td>@row.description</td>
-            <td>@row.notes</td>
-            <td>@row.yearly</td>
-        </tr>
-        }
+
+    <a class="btn btn-default pull-right" role="button" href="/AddBackup">Add</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a href="#">Date</a></th>
+                <th><a href="#">Label</a></th>
+                <th><a href="#">Description</a></th>
+                <th><a href="#">Notes</a></th>
+                <th><a href="#">Yearly</a></th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var row in selectedData)
+            {
+            <tr>
+                <td>@row.date</td>
+                <td>@row.label</td>
+                <td>@row.description</td>
+                <td>@row.notes</td>
+                <td>@row.yearly</td>
+                <td><a class="btn btn-primary btn-sm pull-right" role="button" href="#">Edit</a></td>
+            </tr>
+            }
+        </tbody>
     </table>
 </div>
