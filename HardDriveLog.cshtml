@@ -1,18 +1,64 @@
 ﻿@{
+    // This page uses string formatting to insert variables in the
+    // SQL Query for the purposes of table sorting.  I find this
+    // method to be more difficult to read and follow than the
+    // switch method I used on BackupLog.  Adding appropriate
+    // input sanitization will not help readability either.
+    
     Layout = "~/_Layout.cshtml";
-    Page.Title = "Hard Drive Inventory";
-    Page.Heading = "List of Backup Hard Drives";
+    Page.Title = "Hard Drives";
+    Page.Heading="Hard Drive Log";
+
+    var sort = "label";
+    var sortdir = "DESC";
+    var Sqlsortdir = "ASC";
 
     var db = Database.Open("BackupTrackr");
     var selectData = @"SELECT HardDrives.label, HardDrives.serial,
                               HardDriveStatuses.description, HardDrives.size
                          FROM HardDrives
                          JOIN HardDriveStatuses
-                           ON HardDrives.status = HardDriveStatuses.id";
-    var selectedData = db.Query(selectData);
-    WebGrid grid = new WebGrid(source: selectedData);
+                           ON HardDrives.status = HardDriveStatuses.id 
+                           {0} {1} {2}";
+    var order = "ORDER BY ";
+
+    if(!Request.QueryString["sort"].IsEmpty()){
+        sort = Request.QueryString["sort"];
+        sort += " ";
+    }
+    if(!Request.QueryString["sortdir"].IsEmpty()){
+        Sqlsortdir = Request.QueryString["sortdir"];
+        if(Sqlsortdir == "ASC"){
+            sortdir = "DESC";
+        } else {
+            sortdir = "ASC";
+        }
+    }
+    var query = string.Format(selectData,"ORDER BY ",sort,Sqlsortdir);
+    var selectedData = db.Query(query);
+    
+    
 }
 
-<div>
-    @grid.GetHtml()
-</div>
+<a class="btn btn-default pull-right" role="button" href="/AddHardDrive">Add</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><a href="/HardDriveLog?sort=label&sortdir=@sortdir">Label</a></th>
+            <th><a href="/HardDriveLog?sort=serial&sortdir=@sortdir">Serial</a></th>
+            <th><a href="/HardDriveLog?sort=description&sortdir=@sortdir">Status</a></th>
+            <th><a href="/HardDriveLog?sort=size&sortdir=@sortdir">Size</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var row in selectedData){
+        <tr>
+            <td>@row.label</td>
+            <td>@row.serial</td>
+            <td>@row.description</td>
+            <td>@row.size</td>
+        </tr>
+        }
+    </tbody>
+</table>
