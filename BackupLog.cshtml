@@ -2,8 +2,15 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Backup Log";
 
-    var sort = Request.QueryString["sort"];
+    // Testing table sorting using switch with string concatenation
 
+    var dateSort = "ASC";
+    var labelSort = "ASC";
+    var descriptionSort = "ASC";
+    var typeSort = "ASC";
+    var notesSort = "ASC";
+    var yearlySort = "ASC";
+        
     var db = Database.Open("BackupTrackr");
     var selectQuery = @"SELECT Backups.date as Date, HardDrives.label as Label,
                                Backups.description as Description,
@@ -13,9 +20,71 @@
                           LEFT JOIN HardDrives
                             ON Backups.harddrive = HardDrives.id
                           LEFT JOIN BackupTypes
-                            ON Backups.type = BackupTypes.id
-                         ORDER BY @sort";
+                            ON Backups.type = BackupTypes.id";
     
+    switch(Request.QueryString["sort"]){
+        case "date":
+            selectQuery += " ORDER BY Backups.date";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                dateSort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                dateSort = "ASC";
+            }
+            break;
+        case "label":
+            selectQuery += " ORDER BY HardDrives.label";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                labelSort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                labelSort = "ASC";
+            }
+            break;
+        case "description":
+            selectQuery += " ORDER BY Backups.description";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                descriptionSort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                descriptionSort = "ASC";
+            }
+            break;
+        case "type":
+            selectQuery += " ORDER BY BackupTypes.description";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                typeSort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                typeSort = "ASC";
+            }
+            break;
+        case "notes":
+            selectQuery += " ORDER BY Backups.notes";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                notesSort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                notesSort = "ASC";
+            }
+            break;
+        case "yearly":
+            selectQuery += " ORDER BY Backups.yearly";
+            if(Request.QueryString["sortdir"] == "ASC"){
+                selectQuery += " ASC";
+                yearlySort = "DESC";
+            } else {
+                selectQuery += " DESC";
+                yearlySort = "ASC";
+            }
+            break;
+    }
+
     var selectedData = db.Query(selectQuery);
 }
 
@@ -26,11 +95,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th><a href="/BackupLog?sort=date">Date</a></th>
-                <th><a href="/BackupLog?sort=label">Label</a></th>
-                <th><a href="/BackupLog?sort=description">Description</a></th>
-                <th><a href="/BackupLog?sort=notes">Notes</a></th>
-                <th><a href="/BackupLog?sort=yearly">Yearly</a></th>
+                <th><a href="/BackupLog?sort=date&sortdir=@dateSort">Date</a></th>
+                <th><a href="/BackupLog?sort=label&sortdir=@labelSort">Label</a></th>
+                <th><a href="/BackupLog?sort=description&sortdir=@descriptionSort">Description</a></th>
+                <th><a href="/BackupLog?sort=type&sortdir=@typeSort">Type</a></th>
+                <th><a href="/BackupLog?sort=notes&sortdir=@notesSort">Notes</a></th>
+                <th><a href="/BackupLog?sort=yearly&sortdir=@yearlySort">Yearly</a></th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -41,6 +111,7 @@
                 <td>@row.date</td>
                 <td>@row.label</td>
                 <td>@row.description</td>
+                <td>@row.type</td>
                 <td>@row.notes</td>
                 <td>@row.yearly</td>
                 <td><a class="btn btn-primary btn-sm pull-right" role="button" href="#">Edit</a></td>

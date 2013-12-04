@@ -1,6 +1,12 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Testing Page";
+
+    var db = Database.Open("BackupTrackr");
+    var select = "SELECT * FROM BACKUPS";
+    select += "ORDER BY id";
+    //var query = string.Format(select, param);
+    var result = db.Query(select);
 }
 
 <div>
