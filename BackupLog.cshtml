@@ -12,7 +12,8 @@
     var yearlySort = "ASC";
         
     var db = Database.Open("BackupTrackr");
-    var selectQuery = @"SELECT Backups.date as Date, HardDrives.label as Label,
+    var selectQuery = @"SELECT Backups.id, Backups.date as Date, 
+                               HardDrives.label as Label,
                                Backups.description as Description,
                                BackupTypes.description as Type,
                                Backups.notes as Notes, Backups.yearly as Yearly
@@ -114,7 +115,7 @@
                 <td>@row.type</td>
                 <td>@row.notes</td>
                 <td>@row.yearly</td>
-                <td><a class="btn btn-primary btn-sm pull-right" role="button" href="#">Edit</a></td>
+                <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditBackup?id=@row.id">Edit</a></td>
             </tr>
             }
         </tbody>

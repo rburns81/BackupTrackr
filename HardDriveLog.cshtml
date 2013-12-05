@@ -14,7 +14,7 @@
     var Sqlsortdir = "ASC";
 
     var db = Database.Open("BackupTrackr");
-    var selectData = @"SELECT HardDrives.label, HardDrives.serial,
+    var selectData = @"SELECT HardDrives.id, HardDrives.label, HardDrives.serial,
                               HardDriveStatuses.description, HardDrives.size
                          FROM HardDrives
                          JOIN HardDriveStatuses
@@ -49,6 +49,7 @@
             <th><a href="/HardDriveLog?sort=serial&sortdir=@sortdir">Serial</a></th>
             <th><a href="/HardDriveLog?sort=description&sortdir=@sortdir">Status</a></th>
             <th><a href="/HardDriveLog?sort=size&sortdir=@sortdir">Size</a></th>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -58,6 +59,7 @@
             <td>@row.serial</td>
             <td>@row.description</td>
             <td>@row.size</td>
+            <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive?id=@row.id">Edit</a></td>
         </tr>
         }
     </tbody>
