@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Manage Hard Drives";
+
+    var legend = "Add Hard Drive";
+    var label = "";
+    var serial = "";
+    var status = "";
+    var size = "";
+    var hiddenField = "";
+    var id = "";
+
+    if(!Request.QueryString["id"].IsEmpty()){
+        legend = "Edit Hard Drive";
+        id = Request.QueryString["id"];
+        var db = Database.Open("BackupTrackr");
+        var selectQuery = "SELECT * FROM HardDrives WHERE id=@0";
+        var result = db.QuerySingle(selectQuery,id);
+        label = result.label;
+        serial = result.serial;
+        status = result.status.ToString();
+        size = result.size.ToString();
+        
+    }
+}
+
+<div>
+    <form method="post">
+        <fieldset>
+            <legend>@legend</legend>
+            <ul>
+                <li><label for="label">Label:</label>
+                    <input type="text" name="label" id="label" value="@label" /></li>
+                <li><label for="serial">Serial:</label>
+                    <input type="text" name="serial" id="serial" value="@serial" /></li>
+                <li><label for="status">Status:</label>
+                    <input type="text" name="status" id="status" value="@status" /></li>
+                <li><label for="size">Size:</label>
+                    <input type="text" name="size" id="size" value="@size" /></li>
+            </ul>
+            <input type="hidden" name="id" value="@id" />
+            <p><input type="submit" value="Submit" /></p>
+        </fieldset>
+    </form>
+</div>
