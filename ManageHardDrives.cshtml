@@ -9,51 +9,58 @@
     var size = "";
     var hiddenField = "";
     var id = "";
+    var selected = "";
+    var dbOptions = Database.Open("BackupTrackr");
+    var optionQuery = "SELECT * FROM HardDriveStatuses";
+    var options = dbOptions.Query(optionQuery);
 
     if(!Request.QueryString["id"].IsEmpty()){
         legend = "Edit Hard Drive";
         id = Request.QueryString["id"];
         var db = Database.Open("BackupTrackr");
-        var selectQuery = @"SELECT HardDrives.label, HardDrives.Serial,
-                                   HardDriveStatuses.description,
-                                   HardDrives.size 
-                              FROM HardDrives 
-                              JOIN HardDriveStatuses
-                                ON HardDrives.status = HardDriveStatuses.id
-                             WHERE HardDrives.id=@0";
+        var selectQuery = @"SELECT * FROM HardDrives WHERE id=@0";
         var result = db.QuerySingle(selectQuery,id);
         label = result.label;
         serial = result.serial;
-        status = result.description;
+        status = result.status.ToString();
         size = result.size.ToString();
+    }
+
+    if(IsPost){
+        Validation.RequireField("label","Each hard drive requires a label");
         
     }
 }
 
 
-<form class="form-horizontal" role="form" method="post">
+<form role="form" method="post">
     <div class="form-group">
-        <label for="label" class="col-sm-2 control-label">Label</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="label" value="@label" />
-        </div>
-        <label for="serial" class="col-sm-2 control-label">Serial</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="serial" value="@serial" />
-        </div>
-        <label for="status" class="col-sm-2 control-label">Status</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="status" value="@status" />
-        </div>
-        <label for="size" class="col-sm-2 control-label">Size</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="size" value="@size" />
-        </div>
+        <label for="label">Label</label>
+        <input type="text" class="form-control" name ="label" id="label" value="@label" />
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <input type="hidden" name="id" value="@id" />
-            <button type="submit" class="btn btn-default">Submit</button>
-        </div>
+        <label for="serial">Serial</label>
+        <input type="text" class="form-control" name="serial" id="serial" value="@serial" />
+    </div>
+    <div class="form-group">    
+        <label for="status">Status</label>
+        <select class="form-control" name="status">
+            @foreach(var option in options){
+                <!--This part is not working.  Need to figure out a different way-->
+                if(status == option.id.ToString()){
+                    selected = "selected";
+                }
+                <option value="@option.id" @selected>@option.description</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" name="size" id="size" value="@size" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" name="id" value="@id" />
+        <button type="submit" class="btn btn-default">Submit</button>
+    </div>
     </div>
 </form>
