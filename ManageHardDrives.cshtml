@@ -2,17 +2,17 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Manage Hard Drives";
 
-    var legend = "Add Hard Drive";
     var label = "";
     var serial = "";
     var status = "";
     var size = "";
     var hiddenField = "";
     var id = "";
-    var selected = "";
     var dbOptions = Database.Open("BackupTrackr");
     var optionQuery = "SELECT * FROM HardDriveStatuses";
     var options = dbOptions.Query(optionQuery);
+    var labelValidate = "";
+    var serialValidate = "";
 
     if(!Request.QueryString["id"].IsEmpty()){
         legend = "Edit Hard Drive";
@@ -25,18 +25,21 @@
         status = result.status.ToString();
         size = result.size.ToString();
     }
+    
+    Validation.RequireField("label", "The label is an arbitrary identifier to make it easier to differentiate physical drives. This field should match what is written on the drive. Example: HD01");
 
     if(IsPost){
-        Validation.RequireField("label","Each hard drive requires a label");
         
     }
 }
 
+@Html.ValidationSummary()
 
 <form role="form" method="post">
     <div class="form-group">
         <label for="label">Label</label>
-        <input type="text" class="form-control" name ="label" id="label" value="@label" />
+        <input type="text" class="form-control" name ="label" id="label" value="@Request.Form["label"]" />
+        @Html.ValidationMessage("label")
     </div>
     <div class="form-group">
         <label for="serial">Serial</label>
@@ -46,11 +49,12 @@
         <label for="status">Status</label>
         <select class="form-control" name="status">
             @foreach(var option in options){
-                <!--This part is not working.  Need to figure out a different way-->
+                var selected = "";
                 if(status == option.id.ToString()){
                     selected = "selected";
                 }
                 <option value="@option.id" @selected>@option.description</option>
+                selected = "";
             }
         </select>
     </div>
