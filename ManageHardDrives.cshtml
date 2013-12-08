@@ -2,20 +2,17 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Manage Hard Drives";
 
+    var id = "";
     var label = "";
     var serial = "";
-    var status = "";
+    var status = "1";
     var size = "";
-    var hiddenField = "";
-    var id = "";
+    
     var dbOptions = Database.Open("BackupTrackr");
     var optionQuery = "SELECT * FROM HardDriveStatuses";
     var options = dbOptions.Query(optionQuery);
-    var labelValidate = "";
-    var serialValidate = "";
 
     if(!Request.QueryString["id"].IsEmpty()){
-        legend = "Edit Hard Drive";
         id = Request.QueryString["id"];
         var db = Database.Open("BackupTrackr");
         var selectQuery = @"SELECT * FROM HardDrives WHERE id=@0";
@@ -27,18 +24,18 @@
     }
     
     Validation.RequireField("label", "The label is an arbitrary identifier to make it easier to differentiate physical drives. This field should match what is written on the drive. Example: HD01");
+    Validation.RequireField("serial", "Each physical drive has an unique identifier in the form of a serial number.  Please enter that here.  Sometimes abbreviated as SN or S/N");
+    Validation.RequireField("size", "Please enter the capacity of the drive in GigaBytes.  For example, a 2 TerraByte drive would be 2,000 GB");
 
-    if(IsPost){
-        
+    if(IsPost && Validation.IsValid()){
+        Page.Title = "Success";
     }
 }
-
-@Html.ValidationSummary()
 
 <form role="form" method="post">
     <div class="form-group">
         <label for="label">Label</label>
-        <input type="text" class="form-control" name ="label" id="label" value="@Request.Form["label"]" />
+        <input type="text" class="form-control" name ="label" id="label" value="@label" />
         @Html.ValidationMessage("label")
     </div>
     <div class="form-group">

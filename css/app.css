@@ -6,3 +6,9 @@ body {
 .navbar {
   margin-bottom: 20px;
 }
+
+.field-validation-error {
+    font-weight: bold;
+    color:#fff;
+    background-color:#d9534f;
+}

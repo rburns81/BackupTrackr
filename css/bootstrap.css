@@ -2409,7 +2409,7 @@ fieldset[disabled] .btn-warning.active {
   border-color: #eea236;
 }
 
-.btn-danger {
+.btn-danger, .field-validation-error {
   color: #ffffff;
   background-color: #d9534f;
   border-color: #d43f3a;
