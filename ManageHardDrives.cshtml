@@ -28,7 +28,25 @@
     Validation.RequireField("size", "Please enter the capacity of the drive in GigaBytes.  For example, a 2 TerraByte drive would be 2,000 GB");
 
     if(IsPost && Validation.IsValid()){
-        Page.Title = "Success";
+        // Researching sanitizing strategies. Will add sanitizing input later
+
+        var dbLabel = Request.Form["label"];
+        var dbSerial = Request.Form["serial"];
+        var dbStatus = Request.Form["status"];
+        var dbSize = Request.Form["size"];
+
+        if(Request.Form["id"].Length > 0){
+            var dbId = Request.Form["id"];
+            var db = Database.Open("BackupTrackr");
+            var updateSql = @"UPDATE HardDrives 
+                                 SET label = @0, serial = @1, 
+                                     status = @2, size = @3
+                               WHERE id = @4";
+            db.Execute(updateSql, dbLabel, dbSerial, dbStatus, dbSize, dbId);
+            Response.Redirect("/HardDriveLog");
+        } else {
+            Page.Title = "Insert";
+        }
     }
 }
 
