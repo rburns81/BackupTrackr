@@ -2,18 +2,50 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Manage Backup Records";
 
+    var date = "";
+    var description = "";
+    var notes = "";
+
+    var labelDb = Database.Open("BackupTrackr");
+    var labelResult = labelDb.Query("SELECT id, label FROM HardDrives");
+
+    var typeDb = Database.Open("BackupTrackr");
+    var typeResult = typeDb.Query("SELECT * FROM BackupTypes");
     // Form handling goes here
 }
 
-<div>
-    <form method="post">
-        <fieldset>
-            <!--Date-->
-            <!--Label-->
-            <!--Description-->
-            <!--Type-->
-            <!--Notes-->
-            <!--Submit-->
-        </fieldset>
-    </form>
-</div>
+<form method="post">
+    <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" class="form-control" name="date" id="date" value="@date" />
+        @Html.ValidationMessage("date")
+    </div>
+    <div class="form-group">
+        <label for="label">Label</label>
+        <select class="form-control" name="label" id="label">
+            <option></option>
+            @foreach(var label in labelResult) {
+            <option value="@label.id">@label.label</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" name="description" id="description" value="@description" />
+    </div>
+    <div class="form-group">
+        <label for="type">Type</label>
+        <select class="form-control" name="type" id="type">
+            @foreach(var type in typeResult){
+                <option value="@type.id">@type.description</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        <input type="text" class="form-control" name="notes" id="notes" value="@notes" />
+    </div>        
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+</form>
