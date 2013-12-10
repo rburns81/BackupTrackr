@@ -1,7 +1,8 @@
 To Do:
+- Write HTML form for adding backups 
+- Research sanitizing input for ASP
+
+Done:
 - Finish BackupLog
     |- Make the backup log the default page
 - Write HTML form for adding hard drives
-- Write HTML form for adding backups 
-
-Done:

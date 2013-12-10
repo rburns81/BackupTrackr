@@ -34,10 +34,10 @@
         var dbSerial = Request.Form["serial"];
         var dbStatus = Request.Form["status"];
         var dbSize = Request.Form["size"];
+        var db = Database.Open("BackupTrackr");
 
         if(Request.Form["id"].Length > 0){
             var dbId = Request.Form["id"];
-            var db = Database.Open("BackupTrackr");
             var updateSql = @"UPDATE HardDrives 
                                  SET label = @0, serial = @1, 
                                      status = @2, size = @3
@@ -45,7 +45,11 @@
             db.Execute(updateSql, dbLabel, dbSerial, dbStatus, dbSize, dbId);
             Response.Redirect("/HardDriveLog");
         } else {
-            Page.Title = "Insert";
+            var insertSql = @"INSERT INTO HardDrives
+                                     (label, serial, status, size)
+                              VALUES (@0, @1, @2, @3)";
+            db.Execute(insertSql, dbLabel, dbSerial, dbStatus, dbSize);
+            Response.Redirect("/HardDriveLog");
         }
     }
 }
@@ -59,6 +63,7 @@
     <div class="form-group">
         <label for="serial">Serial</label>
         <input type="text" class="form-control" name="serial" id="serial" value="@serial" />
+        @Html.ValidationMessage("serial")
     </div>
     <div class="form-group">    
         <label for="status">Status</label>
@@ -76,6 +81,7 @@
     <div class="form-group">
         <label for="size">Size</label>
         <input type="text" class="form-control" name="size" id="size" value="@size" />
+        @Html.ValidationMessage("size")
     </div>
     <div class="form-group">
         <input type="hidden" name="id" value="@id" />
