@@ -4,63 +4,52 @@
     // method to be more difficult to read and follow than the
     // switch method I used on BackupLog.  Adding appropriate
     // input sanitization will not help readability either.
-    
+
+    // Page Group
     Layout = "~/_Layout.cshtml";
     Page.Title = "Hard Drives";
     Page.Heading="Hard Drive Log";
 
-    var sort = "label";
-    var sortdir = "DESC";
-    var Sqlsortdir = "ASC";
+    // QueryString group
+    var sortColumn = Request.QueryString["sort"] ?? "label"; // Set a default sorted column.
+    var sortDirection = Request.QueryString["sortdir"] ?? "DESC"; // Set a default sort direction
+    var sortDirectionNext = sortDirection == "DESC" ? "ASC" : "DESC"; // Flip the sort direction
 
+    // Database Group
     var db = Database.Open("BackupTrackr");
-    var selectData = @"SELECT HardDrives.id, HardDrives.label, HardDrives.serial,
-                              HardDriveStatuses.description, HardDrives.size
-                         FROM HardDrives
-                         JOIN HardDriveStatuses
-                           ON HardDrives.status = HardDriveStatuses.id 
-                           {0} {1} {2}";
-    var order = "ORDER BY ";
-
-    if(!Request.QueryString["sort"].IsEmpty()){
-        sort = Request.QueryString["sort"];
-        sort += " ";
-    }
-    if(!Request.QueryString["sortdir"].IsEmpty()){
-        Sqlsortdir = Request.QueryString["sortdir"];
-        if(Sqlsortdir == "ASC"){
-            sortdir = "DESC";
-        } else {
-            sortdir = "ASC";
-        }
-    }
-    var query = string.Format(selectData,"ORDER BY ",sort,Sqlsortdir);
+    var query = string.Format(@"SELECT 
+                                  HardDrives.id, 
+                                  HardDrives.label, 
+                                  HardDrives.serial,
+                                  HardDrives.size,
+                                  HardDriveStatuses.description
+                                FROM HardDrives
+                                JOIN HardDriveStatuses
+                                  ON HardDrives.status = HardDriveStatuses.id 
+                                ORDER BY {0} {1}", sortColumn, sortDirection);
     var selectedData = db.Query(query);
-    
-    
 }
 
 <a class="btn btn-default pull-right" role="button" href="/AddHardDrive">Add</a>
-
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th><a href="/HardDriveLog?sort=label&sortdir=@sortdir">Label</a></th>
-            <th><a href="/HardDriveLog?sort=serial&sortdir=@sortdir">Serial</a></th>
-            <th><a href="/HardDriveLog?sort=description&sortdir=@sortdir">Status</a></th>
-            <th><a href="/HardDriveLog?sort=size&sortdir=@sortdir">Size</a></th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var row in selectedData){
-        <tr>
-            <td>@row.label</td>
-            <td>@row.serial</td>
-            <td>@row.description</td>
-            <td>@row.size</td>
-            <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/ManageHardDrives?id=@row.id">Edit</a></td>
-        </tr>
-        }
-    </tbody>
+  <thead>
+  <tr>
+    <th><a href="/HardDriveLog?sort=label&sortdir=@sortDirectionNext">Label</a></th>
+    <th><a href="/HardDriveLog?sort=serial&sortdir=@sortDirectionNext">Serial</a></th>
+    <th><a href="/HardDriveLog?sort=description&sortdir=@sortDirectionNext">Status</a></th>
+    <th><a href="/HardDriveLog?sort=size&sortdir=@sortDirectionNext">Size</a></th>
+    <th>&nbsp;</th>
+  </tr>
+   </thead>
+  <tbody>
+    @foreach(var row in selectedData){
+    <tr>
+      <td>@row.label</td>
+      <td>@row.serial</td>
+      <td>@row.description</td>
+      <td>@row.size</td>
+      <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/ManageHardDrives?id=@row.id">Edit</a></td>
+    </tr>
+  }
+   </tbody>
 </table>
