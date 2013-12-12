@@ -1,0 +1,58 @@
+﻿@{
+
+  // Lets look at booleans
+  
+  /*
+
+  // This is your code
+  if( sortDirection == "DESC"){
+    sortDirectionNext = "ASC";
+  } else {
+    sortDirectionNext = "DESC";
+  }
+
+  // This is the change I made to your code
+  var sortDirection = Request.QueryString["sortdir"] ?? "DESC"; // I gave the sort direction a default value
+  var sortDirectionNext = sortDirection == "DESC" ? "ASC" : "DESC";
+  
+  */
+  
+  // ****************************************
+
+  /*
+    let approch this from a different angle
+
+      - What if instead of using strings ("ASC" and "DESC") you used a boolean. isDescending
+      - Its alway good to make bool variable sound like a statment like Is Descending
+  */
+
+  bool isFalse;
+
+  // gets the current or the default value. Works perfectly 
+  // well as long as you spell true and false correctly.
+  bool isDescending = Request.QueryString["Descending"] != null ? 
+                        bool.Parse(Request.QueryString["Descending"]) : 
+                        true;
+  
+  // to flip the value of a boolean just set it:
+  
+  //isDescending = !isDescending; 
+
+
+
+
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <body>
+     The variable "isDescending" is set to <b>@isDescending</b> </br> 
+    and the the flip is @(!isDescending)
+  </body>
+</html>
