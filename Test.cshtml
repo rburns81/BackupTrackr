@@ -1,14 +1,9 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Testing Page";
-
-    var db = Database.Open("BackupTrackr");
-    var select = "SELECT * FROM BACKUPS";
-    select += "ORDER BY id";
-    //var query = string.Format(select, param);
-    var result = db.Query(select);
+    PageData["label"] = "test";
 }
 
 <div>
-    <p>This is a temporary page for testing out new functionality.  Seeing as how the basic functionality is not quite in place yet, there is nothing of note here at this time.  Move along.</p>
+    @RenderPage("~/_TestForm.cshtml")
 </div>

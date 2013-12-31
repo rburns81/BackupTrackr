@@ -1,0 +1,18 @@
+﻿@{
+    
+    var label = "";
+    var serial = "";
+}
+
+<form role="form" method="post">
+    <div class="form-group">
+        <label for="label">Label</label>
+        <input type="text" class="form-control" name ="label" id="label" value="@PageData["label"]" />
+        @Html.ValidationMessage("label")
+    </div>
+    <div class="form-group">
+        <label for="serial">Serial</label>
+        <input type="text" class="form-control" name="serial" id="serial" value="@serial" />
+        @Html.ValidationMessage("serial")
+    </div>
+</form>
