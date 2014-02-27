@@ -2,6 +2,8 @@
     
     var label = "";
     var serial = "";
+    var status = "";
+    var size = "";
 }
 
 <form role="form" method="post">
@@ -12,7 +14,18 @@
     </div>
     <div class="form-group">
         <label for="serial">Serial</label>
-        <input type="text" class="form-control" name="serial" id="serial" value="@serial" />
+        <input type="text" class="form-control" name="serial" id="serial" value="@PageData["serial"]" />
         @Html.ValidationMessage("serial")
     </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <input type="text" class="form-control" name="status" id="status" value="@status" />
+        @Html.ValidationMessage("status")
+    </div>
+    <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" name="size" id="size" value="@size" />
+        @Html.ValidationMessage("size")
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
 </form>

@@ -1,9 +1,20 @@
 ﻿@{
+
+
     Layout = "~/_Layout.cshtml";
+
+    var db = Database.Open("BackupTrackr");
+    var selectQuery = @"SELECT HardDrives.serial FROM HardDrives WHERE HardDrives.Id = 1";
+    var data = db.QuerySingle(selectQuery);
+            
     Page.Title = "Testing Page";
     PageData["label"] = "test";
+    PageData["serial"] = data.serial;
 }
 
 <div>
+    <p>Use this page to enter form data for new hard drives.</p>
     @RenderPage("~/_TestForm.cshtml")
 </div>
+
+<hr />
