@@ -19,12 +19,12 @@
     </div>
     <div class="form-group">
         <label for="status">Status</label>
-        <input type="text" class="form-control" name="status" id="status" value="@status" />
+        <input type="text" class="form-control" name="status" id="status" value="@PageData["status"]" />
         @Html.ValidationMessage("status")
     </div>
     <div class="form-group">
         <label for="size">Size</label>
-        <input type="text" class="form-control" name="size" id="size" value="@size" />
+        <input type="text" class="form-control" name="size" id="size" value="@PageData["size"]"/>
         @Html.ValidationMessage("size")
     </div>
     <button type="submit" class="btn btn-default">Submit</button>

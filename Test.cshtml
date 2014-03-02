@@ -7,9 +7,14 @@
     var selectQuery = @"SELECT HardDrives.serial FROM HardDrives WHERE HardDrives.Id = 1";
     var data = db.QuerySingle(selectQuery);
             
-    Page.Title = "Testing Page";
-    PageData["label"] = "test";
-    PageData["serial"] = data.serial;
+    Page.Title = "Adding Hard Drive Page";
+    PageData["label"] = "";
+    PageData["serial"] = "";
+    PageData["status"] = "";
+    PageData["size"] = "";
+    
+
+
 }
 
 <div>
