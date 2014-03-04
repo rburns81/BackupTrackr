@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Adding Hard Drive Page";
+    PageData["label"] = "";
+    PageData["serial"] = "";
+    PageData["status"] = "";
+    PageData["size"] = "";
+    
+    if(IsPost){
+        var dblabel = Request.Form["label"];
+        var dbserial = Request.Form["serial"];
+        var dbstatus = Request.Form["status"];
+        var dbsize = Request.Form["size"];
+    
+        var db = Database.Open("BackupTrackr");
+        var query = @"INSERT INTO HardDrives
+                                  (label, serial, status, size)
+                           VALUES (@0, @1, @2, @3)";
+        db.Execute(query,dblabel,dbserial,dbstatus,dbsize);
+        Response.Redirect("/HardDriveLog");
+    }
+
+}
+
+<div>
+    <p>Use this page to add new hard drives to the database.</p>
+    @RenderPage("~/_HardDriveForm.cshtml")
+</div>
+
+<hr />

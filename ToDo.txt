@@ -1,6 +1,8 @@
 To Do:
 - Write HTML form for adding backups 
 - Research sanitizing input for ASP
+- Add dropdown for statuses on _HardDriveForm
+- Indicate size should be in GB on _HardDriveForm
 
 Done:
 - Finish BackupLog
