@@ -1,28 +1,32 @@
 ﻿@{
-    
-    
+    var db = Database.Open("BackupTrackr");
+    var selectQuery = "SELECT * FROM HardDriveStatuses";
+    var options = db.Query(selectQuery);
 }
+
 
 <form role="form" method="post">
     <div class="form-group">
         <label for="label">Label</label>
         <input type="text" class="form-control" name ="label" id="label" value="@PageData["label"]" />
-        @Html.ValidationMessage("label")
     </div>
     <div class="form-group">
         <label for="serial">Serial</label>
         <input type="text" class="form-control" name="serial" id="serial" value="@PageData["serial"]" />
-        @Html.ValidationMessage("serial")
     </div>
     <div class="form-group">
         <label for="status">Status</label>
-        <input type="text" class="form-control" name="status" id="status" value="@PageData["status"]" />
-        @Html.ValidationMessage("status")
+        <select name="status" class="form-control" id="status">
+            @foreach(var option in options){
+                var selected = option.id.ToString() == PageData["status"] ? "selected" : "";
+                <option value="@option.id" @selected>@option.description</option>
+                
+            }
+        </select>
     </div>
     <div class="form-group">
         <label for="size">Size</label>
-        <input type="text" class="form-control" name="size" id="size" value="@PageData["size"]"/>
-        @Html.ValidationMessage("size")
+        <input type="text" class="form-control" name="size" id="size" value="@PageData["size"]" placeholder="Enter size in Gigabytes" />
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
