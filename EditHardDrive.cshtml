@@ -1,9 +1,24 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Edit Hard Drives";
+    
+    if(Request.QueryString["id"].IsEmpty()){
+        Response.Redirect("/HardDriveLog");
+    }
+    
+    var hardDriveId = Request.QueryString["id"];
+    var db = Database.Open("BackupTrackr");
+    var singleQuery = @"SELECT * 
+                          FROM HardDrives
+                         WHERE id = @0";
+    var result = db.QuerySingle(singleQuery,hardDriveId);
 
-
+    PageData["label"] = result.label;
+    PageData["serial"] = result.serial;
+    PageData["status"] = result.status;
+    PageData["size"] = result.size;
 }
+
 
 <p>Modify hard drive data below.</p>
 @RenderPage("~/_HardDriveForm.cshtml")
