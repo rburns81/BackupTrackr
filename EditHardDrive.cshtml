@@ -17,8 +17,22 @@
     PageData["serial"] = result.serial;
     PageData["status"] = result.status;
     PageData["size"] = result.size;
+
+    if(IsPost){
+        var dbLabel = Request.Form["label"];
+        var dbSerial = Request.Form["serial"];
+        var dbStatus = Request.Form["status"];
+        var dbSize = Request.Form["size"];
+
+        var updateQuery = @"UPDATE HardDrives 
+                                 SET label = @0, serial = @1, 
+                                     status = @2, size = @3
+                               WHERE id = @4";
+        db.Execute(updateQuery, dbLabel, dbSerial, dbStatus, dbSize, hardDriveId);
+        Response.Redirect("/HardDriveLog");
+    }
 }
 
-
+<h1>ID: @hardDriveId</h1>
 <p>Modify hard drive data below.</p>
 @RenderPage("~/_HardDriveForm.cshtml")
