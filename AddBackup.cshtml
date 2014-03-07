@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Add Backups";
+
+    PageData["date"] = "";
+    PageData["label"] = "";
+    PageData["description"] = "";
+    PageData["type"] = "";
+    PageData["notes"] = "";
+    PageData["yearly"] = "";
+}
+
+<p>Use this form to add new backup entries to the database</p>
+@RenderPage("~/_BackupForm.cshtml")
