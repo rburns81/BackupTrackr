@@ -8,6 +8,23 @@
     PageData["type"] = "";
     PageData["notes"] = "";
     PageData["yearly"] = "";
+
+    if(IsPost){
+        var dbDate = Request.QueryString["date"];
+        var dbLabel = Request.QueryString["date"];
+        var dbDescription = Request.QueryString["date"];
+        var dbType = Request.QueryString["date"];
+        var dbNotes = Request.QueryString["date"];
+        var dbYearly = Request.QueryString["date"];
+
+        var db = Database.Open("BackupTrackr");
+        var query = @"INSERT INTO Backups
+                                  (date, label, description
+                                  type, notes, yearly)
+                           VALUES (@0, @1, @2, @3, @4, @5)";
+        db.Execute(query, dbDate, dbLabel, dbDescription, dbType, dbNotes, dbYearly);
+        Response.Redirect("/BackupLog");
+    }
 }
 
 <p>Use this form to add new backup entries to the database</p>

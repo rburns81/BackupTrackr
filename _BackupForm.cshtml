@@ -37,9 +37,17 @@
         <label for="notes">Notes</label>
         <input type="text" class="form-control" name="notes" id="notes" value="@PageData["notes"]" />
     </div>
-<div class="form-group">
-        <label for="yearly">Yearly</label>
-        <input type="text" class="form-control" name="yearly" id="yearly" value="@PageData["yearly"]" />
+    <div class="radio">
+        <label>
+            <input type="radio" name="yearly" id="yearly1" />
+            This is a yearly backup.
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="yearly" id="yearly2" checked />
+            This is not a yearly backup.
+        </label>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
