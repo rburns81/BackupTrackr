@@ -9,14 +9,13 @@
     var descriptionSort = "ASC";
     var typeSort = "ASC";
     var notesSort = "ASC";
-    var yearlySort = "ASC";
         
     var db = Database.Open("BackupTrackr");
     var selectQuery = @"SELECT Backups.id, Backups.date as Date, 
                                HardDrives.label as Label,
                                Backups.description as Description,
-                               BackupTypes.description as Type,
-                               Backups.notes as Notes, Backups.yearly as Yearly
+                               BackupTypes.name as Type,
+                               Backups.notes as Notes
                           FROM Backups
                           LEFT JOIN HardDrives
                             ON Backups.harddrive = HardDrives.id
@@ -74,16 +73,6 @@
                 notesSort = "ASC";
             }
             break;
-        case "yearly":
-            selectQuery += " ORDER BY Backups.yearly";
-            if(Request.QueryString["sortdir"] == "ASC"){
-                selectQuery += " ASC";
-                yearlySort = "DESC";
-            } else {
-                selectQuery += " DESC";
-                yearlySort = "ASC";
-            }
-            break;
     }
 
     var selectedData = db.Query(selectQuery);
@@ -101,7 +90,6 @@
                 <th><a href="/BackupLog?sort=description&sortdir=@descriptionSort">Description</a></th>
                 <th><a href="/BackupLog?sort=type&sortdir=@typeSort">Type</a></th>
                 <th><a href="/BackupLog?sort=notes&sortdir=@notesSort">Notes</a></th>
-                <th><a href="/BackupLog?sort=yearly&sortdir=@yearlySort">Yearly</a></th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -114,7 +102,6 @@
                 <td>@row.description</td>
                 <td>@row.type</td>
                 <td>@row.notes</td>
-                <td>@row.yearly</td>
                 <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/ManageBackups?id=@row.id">Edit</a></td>
             </tr>
             }
