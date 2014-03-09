@@ -1,8 +1,8 @@
 ﻿@{
     var db = Database.Open("BackupTrackr");
     
-    var labelQuery = @"SELECT id, label FROM HardDrives WHERE status=1";
-    var labelList = db.Query(labelQuery);
+    var hardDriveQuery = @"SELECT id, label FROM HardDrives WHERE status=1";
+    var hardDriveList = db.Query(hardDriveQuery);
 
     var typesQuery = @"SELECT * from BackupTypes";
     var typesList = db.Query(typesQuery);
@@ -14,10 +14,10 @@
         <input type="text" class="form-control" name="date" id="date" value="@PageData["date"]" />
     </div>
     <div class="form-group">
-        <label for="label">Label</label>
-        <select class="form-control" name="label" id="label">
-            @foreach(var label in labelList) {
-                <option value="@label.id">@label.label</option>
+        <label for="harddrive">Hard Drive</label>
+        <select class="form-control" name="harddrive" id="harddrive">
+            @foreach(var hardDrive in hardDriveList) {
+                <option value="@hardDrive.id">@hardDrive.label</option>
             }
         </select>
     </div>

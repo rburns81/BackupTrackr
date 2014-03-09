@@ -3,27 +3,24 @@
     Page.Title = "Add Backups";
 
     PageData["date"] = "";
-    PageData["label"] = "";
+    PageData["hardDrive"] = "";
     PageData["description"] = "";
     PageData["type"] = "";
     PageData["notes"] = "";
-    PageData["yearly"] = "";
-
+    
     if(IsPost){
-        var dbDate = Request.QueryString["date"];
-        var dbLabel = Request.QueryString["date"];
-        var dbDescription = Request.QueryString["date"];
-        var dbType = Request.QueryString["date"];
-        var dbNotes = Request.QueryString["date"];
-        var dbYearly = Request.QueryString["date"];
-
+        var dbDate = DateTime.ParseExact(Request.QueryString["date"].ToString(), "MMddyyyy", System.Globalization.CultureInfo.CurrentCulture);
+        var dbHardDrive = Request.QueryString["harddrive"];
+        var dbDescription = Request.QueryString["description"];
+        var dbType = Request.QueryString["type"];
+        var dbNotes = Request.QueryString["notes"];
+        
         var db = Database.Open("BackupTrackr");
         var query = @"INSERT INTO Backups
-                                  (date, label, description
-                                  type, notes, yearly)
-                           VALUES (@0, @1, @2, @3, @4, @5)";
-        db.Execute(query, dbDate, dbLabel, dbDescription, dbType, dbNotes, dbYearly);
-        Response.Redirect("/BackupLog");
+                                  (date, harddrive, description, type, notes)
+                           VALUES (@0, @1, @2, @3, @4)";
+        //db.Execute(query, dbDate, dbHardDrive, dbDescription, dbType, dbNotes);
+        //Response.Redirect("/BackupLog");
     }
 }
 
