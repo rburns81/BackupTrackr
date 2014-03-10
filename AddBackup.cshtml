@@ -9,18 +9,18 @@
     PageData["notes"] = "";
     
     if(IsPost){
-        var dbDate = DateTime.ParseExact(Request.QueryString["date"].ToString(), "MMddyyyy", System.Globalization.CultureInfo.CurrentCulture);
-        var dbHardDrive = Request.QueryString["harddrive"];
-        var dbDescription = Request.QueryString["description"];
-        var dbType = Request.QueryString["type"];
-        var dbNotes = Request.QueryString["notes"];
+        var dbDate = DateTime.ParseExact(Request.Form["date"].ToString(), "d", System.Globalization.CultureInfo.CurrentCulture);
+        var dbHardDrive = Request.Form["harddrive"];
+        var dbDescription = Request.Form["description"];
+        var dbType = Request.Form["type"];
+        var dbNotes = Request.Form["notes"];
         
         var db = Database.Open("BackupTrackr");
         var query = @"INSERT INTO Backups
                                   (date, harddrive, description, type, notes)
                            VALUES (@0, @1, @2, @3, @4)";
-        //db.Execute(query, dbDate, dbHardDrive, dbDescription, dbType, dbNotes);
-        //Response.Redirect("/BackupLog");
+        db.Execute(query, dbDate, dbHardDrive, dbDescription, dbType, dbNotes);
+        Response.Redirect("/BackupLog");
     }
 }
 
