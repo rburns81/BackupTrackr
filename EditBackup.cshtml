@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Edit Backups";
+    
+    if(Request.QueryString["id"].IsEmpty()){
+        Response.Redirect("/BackupLog");
+    }
+
+    var backupId = Request.QueryString["id"];
+    var db = Database.Open("BackupTrackr");
+    var backupQuery = @"SELECT * FROM Backups WHERE id=@0";
+    var backup = db.QuerySingle(backupQuery,backupId);
+
+    
+}
+
+<p>This page is for editing backups</p>
+@RenderPage("~/_BackupForm.cshtml");
