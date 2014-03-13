@@ -10,7 +10,12 @@
     var db = Database.Open("BackupTrackr");
     var backupQuery = @"SELECT * FROM Backups WHERE id=@0";
     var backup = db.QuerySingle(backupQuery,backupId);
-
+    
+    PageData["date"] = backup.date;
+    PageData["harddrive"] = backup.harddrive;
+    PageData["description"] = backup.description;
+    PageData["type"] = backup.type;
+    PageData["notes"] = backup.notes;
     
 }
 
