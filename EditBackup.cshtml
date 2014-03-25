@@ -17,6 +17,21 @@
     PageData["type"] = backup.type;
     PageData["notes"] = backup.notes;
     
+    if(IsPost){
+        var dbDate = Request.Form["date"];
+        var dbHardDrive = Request.Form["harddrive"];
+        var dbDescription = Request.Form["description"];
+        var dbType = Request.Form["type"];
+        var dbNotes = Request.Form["notes"];
+
+        var updateQuery = @"UPDATE Backups
+                               SET date = @0, harddrive = @1,
+                                   description = @2, type = @3,
+                                   notes = @4
+                             WHERE id = @5";
+        db.Execute(updateQuery,dbDate,dbHardDrive,dbDescription,dbType,dbNotes,backupId);
+        Response.Redirect("/BackupLog");
+    }
 }
 
 <p>This page is for editing backups</p>

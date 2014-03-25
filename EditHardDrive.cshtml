@@ -25,9 +25,9 @@
         var dbSize = Request.Form["size"];
 
         var updateQuery = @"UPDATE HardDrives 
-                                 SET label = @0, serial = @1, 
-                                     status = @2, size = @3
-                               WHERE id = @4";
+                               SET label = @0, serial = @1, 
+                                   status = @2, size = @3
+                             WHERE id = @4";
         db.Execute(updateQuery, dbLabel, dbSerial, dbStatus, dbSize, hardDriveId);
         Response.Redirect("/HardDriveLog");
     }
