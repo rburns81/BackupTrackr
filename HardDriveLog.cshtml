@@ -28,6 +28,14 @@
                                   ON HardDrives.status = HardDriveStatuses.id 
                                 ORDER BY {0} {1}", sortColumn, sortDirection);
     var selectedData = db.Query(query);
+
+    // Deletion group
+    if(Request.QueryString["com"] == "del"){
+        var delId = Request.QueryString["id"];
+        var delInfoQuery = "SELECT label FROM harddrives WHERE id=@0";
+        var delInfo = db.QuerySingle(delInfoQuery, delId);
+
+    }
 }
 
 <a class="btn btn-default pull-right" role="button" href="/AddHardDrive">Add</a>
@@ -45,12 +53,13 @@
   <tbody>
     @foreach(var row in selectedData){
     <tr>
+      
       <td>@row.label</td>
       <td>@row.serial</td>
       <td>@row.description</td>
       <td>@row.size</td>
-      <td><a class="btn btn-primary btn-sm pull-right" role="button" href="/EditHardDrive?id=@row.id">Edit</a></td>
-      <td><a class="btn btn-danger btn-sm pull-right" role="button" href="#">Delete</a></td>
+      <td><a class="btn btn-primary btn-sm" role="button" href="/EditHardDrive?id=@row.id">Edit</a></td>
+      <td><a class="btn btn-danger btn-sm" role="button" href="/HardDriveLog?id=@row.id&com=del">Delete</a></td>
     </tr>
   }
    </tbody>
