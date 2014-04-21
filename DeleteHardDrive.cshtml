@@ -1,0 +1,22 @@
+﻿@{
+    // Page Group
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Delete Hard Drive";
+    Page.Heading="Delete Hard Drive";
+    
+    // Database Group
+    var hardDrive = Request.QueryString["id"];
+    var db = Database.Open("BackupTrackr");
+    
+    // Database Hard Drive Query
+    var selectHardDriveQuery = "SELECT label FROM HardDrives WHERE id=@0";
+    var hardDriveResult = db.QuerySingle(selectHardDriveQuery,hardDrive);
+    
+    // Database Backup Query
+    var selectBackupQuery = "SELECT * FROM Backups WHERE harddrive=@0";
+    var backupResult = db.Query(selectBackupQuery,hardDrive);
+}
+
+<p>The following hard drive:</p>
+<h2>@hardDriveResult.label</h2>
+<p>Containing the following backups:</p>
