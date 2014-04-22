@@ -13,10 +13,28 @@
     var hardDriveResult = db.QuerySingle(selectHardDriveQuery,hardDrive);
     
     // Database Backup Query
-    var selectBackupQuery = "SELECT * FROM Backups WHERE harddrive=@0";
+    var selectBackupQuery = "SELECT date,description FROM Backups WHERE harddrive=@0";
     var backupResult = db.Query(selectBackupQuery,hardDrive);
 }
 
-<p>The following hard drive:</p>
-<h2>@hardDriveResult.label</h2>
-<p>Containing the following backups:</p>
+<p class="lead">The following hard drive:
+<strong>@hardDriveResult.label</strong>
+Containing the following backups:</p>
+
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var row in backupResult){
+            <tr>
+                <td>@row.date</td>
+                <td>@row.description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h2>Not turning out the way I thought.  Will rework it later</h2>
