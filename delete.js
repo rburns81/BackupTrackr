@@ -1,8 +1,8 @@
 var list;
 list = document.getElementsByClassName("btn btn-danger btn-sm");
 
-function handleClick(){
-    alert('Event Clicked?');
+function handleClick() {
+    confirm("Deleting hard drive " + this.getAttribute("id") + " will delete associated backups as well.\n\nContinue?");
 }
 
 for (var i = 0; i < list.length; i++){
