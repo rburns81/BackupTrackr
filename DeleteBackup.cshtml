@@ -1,0 +1,15 @@
+﻿@{
+    // Database Group
+    var db = Database.Open("BackupTrackr");
+    var backup = Request.QueryString["id"];
+
+    // Deletion query
+    var error = "";
+    var deleteBackup = "DELETE FROM Backups WHERE id=@0";
+    if(db.Execute(deleteBackup,backup) > 0){
+        Response.Redirect("/BackupLog");
+    } else {
+        error = "There was a problem with the query.";
+    }
+}
+<h2>@error</h2>
