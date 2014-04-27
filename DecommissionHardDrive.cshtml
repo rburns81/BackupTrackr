@@ -1,0 +1,26 @@
+﻿@{
+    // Page Group
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Delete Hard Drive";
+    Page.Heading="Delete Hard Drive";
+    
+    // Database Group
+    var hardDrive = Request.QueryString["id"];
+    var db = Database.Open("BackupTrackr");
+    
+    // Database Queries
+    var error = "";
+    var deleteBackupQuery = "DELETE FROM Backups WHERE harddrive=@0";
+    var decommissionHardDriveQuery = "UPDATE HardDrives SET status=3 WHERE id=@0";
+
+    if(db.Execute(deleteBackupQuery,hardDrive) >= 0){
+        if(db.Execute(decommissionHardDriveQuery,hardDrive) > 0) {
+            Response.Redirect("/HardDriveLog");
+        } else {
+            error = "There was a problem with decommissioning the harddrive";
+        }
+    } else {
+        error = "There was a problem deleting the backups";
+    }
+}
+<h2>@error</h2>

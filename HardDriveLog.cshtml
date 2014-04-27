@@ -50,7 +50,7 @@
       <td>@row.description</td>
       <td>@row.size</td>
       <td><a class="btn btn-primary btn-sm" role="button" href="/EditHardDrive?id=@row.id">Edit</a></td>
-      <td><a class="btn btn-danger btn-sm" id="@row.label" role="button" href="/DeleteHardDrive?id=@row.id" onclick="return confirm('Deleting hard drive ' + this.getAttribute('id') + ' will delete any associated backups.\n\nContinue?')">Delete</a></td>
+      <td><a class="btn btn-danger btn-sm" id="@row.label" role="button" href="/DecommissionHardDrive?id=@row.id" onclick="return confirm('Decommissioning hard drive ' + this.getAttribute('id') + ' will delete any associated backups.\n\nContinue?')">Decommission</a></td>
     </tr>
   }
    </tbody>
