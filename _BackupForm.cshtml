@@ -17,7 +17,7 @@
         <label for="harddrive">Hard Drive</label>
         <select class="form-control" name="harddrive" id="harddrive">
             @foreach(var hardDrive in hardDriveList) {
-                var hdSelected = hardDrive.id == PageData["harddrive"] ? "selected" : "";
+                var hdSelected = hardDrive.id.ToString() == PageData["harddrive"].ToString() ? "selected" : "";
                 <option value="@hardDrive.id" @hdSelected>@hardDrive.label</option>
             }
         </select>
@@ -30,7 +30,7 @@
         <label for="type">Type</label>
         <select class="form-control" name="type" id="type">
             @foreach(var type in typesList) {
-                var typeSelected = type.id == PageData["type"] ? "selected" : "";
+                var typeSelected = type.id.ToString() == PageData["type"].ToString() ? "selected" : "";
                 <option value="@type.id" @typeSelected>@type.name</option>
             }
         </select>
