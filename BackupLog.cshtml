@@ -48,7 +48,7 @@
                 <td>@row.type</td>
                 <td>@row.notes</td>
                 <td><a class="btn btn-primary btn-sm" role="button" href="/EditBackup?id=@row.id">Edit</a></td>
-                <td><a class="btn btn-danger btn-sm" role="button" href="/DeleteBackup?id=@row.id" onclick="confirm('Are you sure you want to delete this backup?')">Delete</a></td>
+                <td><a class="btn btn-danger btn-sm" role="button" href="/DeleteBackup?id=@row.id" onclick="return confirm('Are you sure you want to delete this backup?')">Delete</a></td>
             </tr>
             }
         </tbody>
