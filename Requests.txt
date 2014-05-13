@@ -1,0 +1,26 @@
+Feature Requests
+
+Request Set 1
+Requested by:   Matthew (boss)
+Request date:   5/13/14
+Requests:
+
+1.) Display oldest backup easily
+2.) Give option to delete backups on disk when creating new backup
+3.) Implement way to track the differential backups that make the full backup
+4.) Add an offsite storage field
+
+
+
+Request Set 2
+Requested by:   Me
+Request date:   5/13/14
+Requests:
+
+These are some things I would like to implement that came out of talking 
+with Matthew.  Maybe more of a wishlist.
+
+1.) Implement pagination on tables
+2.) Implement search
+3.) Change Decommission drive to delete drive contents.
+4.) Remove delete button for yearly backups/move yearlys to their own table
